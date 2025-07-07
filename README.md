@@ -10,6 +10,8 @@ Fun content: Free-to-play, Ad-free games integrated into Huaxia Hub
 Get connected: Communicate with others using state of the art RSS
 protocol services for fast, secure and reliable communication
 
+Smarter Lifestyle: Making life easier with smart plugins like Huaxia Weather.
+
 User-Friendly Interface: Intuitive design for easy navigation and use.
 
 High Quality UX: Providing better User Experience through quality and privacy.
