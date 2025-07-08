@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Huaxia Hub</title>
+</head>
+
+<style>
+    /* Make sure html and body take full height */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Use flexbox to push footer to the bottom */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* Main content grows to fill space */
+    .center-container {
+        flex: 1;
+    }
+
+    /* Optional: style the footer */
+    footer {
+        text-align: center;
+        padding: 1em 0;
+    }
+
+    .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40vh; /* 40% of viewport height */
+    }
+    
+    .animated-btn {
+    padding: 1em 2.5em;
+    font-size: 1.2em;
+    color: #fff;
+    background: linear-gradient(90deg, #ff512f, #dd2476, #1fa2ff, #12d8fa, #a6ffcb);
+    background-size: 400% 400%;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: gradientMove 3s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+    }
+
+    .animated-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+    }
+
+    .animated-btn:hover {
+    transform: scale(1.25);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+    }
+
+    .animated-btn:hover::before {
+    opacity: 1;
+    animation: shine 1s;
+    }
+
+    @keyframes gradientMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+    }
+
+    @keyframes shine {
+    0% {transform: translateX(-100%) scaleY(1);}
+    100% {transform: translateX(100%) scaleY(1);}
+    }
+</style>
+
+<body>
+    <h1>Welcome to Huaxia Hub</h1>
+    <div class="center-container">
+        <button class="animated-btn" onclick="startHuaxiaHub()">
+            Start Huaxia Hub
+        </button>
+        <script>
+            function startHuaxiaHub() {
+            if (localStorage.getItem('huaxia_setup_complete') === 'true') {
+                window.location.href = 'programs.html';
+            } else {
+                window.location.href = 'setup.html';
+            }
+            }
+        </script>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Huaxia Interactive. All rights reserved.</p> 
+    <div id="dev-menu" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#c7c7c7; color:#fff; padding:2em; border-radius:10px; z-index:1000;">
+        <h2>Developer Menu</h2>
+        <button onclick="localStorage.clear()">Master Reset</button>
+        <button onclick="document.getElementById('dev-menu').style.display='none'">Close</button>
+        <!-- Add your dev tools here -->
+    </div>
+    <script>
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.shiftKey && e.code === 'KeyD') {
+            const menu = document.getElementById('dev-menu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+    });
+    </script>
+</body>
+</html>
