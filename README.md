@@ -1,3 +1,7 @@
+# NOTICE
+
+Download from the v1.0 branch, not the main. The main branch is designed for viewing only; files are not configured properly.
+
 # Huaxia Hub
 
 A general-use application for everyday tasks.
