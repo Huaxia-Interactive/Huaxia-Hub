@@ -1,75 +1,135 @@
 body {
-  background-color: #ff9900;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: #f5f5f7;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #1d1d1f;
+  margin: 0;
+  padding: 2rem 0 0 0; /* Add 2rem padding to the top */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  color: #1d1d1f;
+  letter-spacing: -0.02em;
 }
 
 h1 {
-  color: rgb(0, 0, 0);
-  text-align: center;
-  font-weight: bold;
-  font-size: xx-large;
+  font-size: 2.5rem;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  line-height: 1.1;
 }
 
 h2 {
-  color: rgb(0, 0, 0);
-  text-align: left;
-  font-size: large;
+  font-size: 1.5rem;
+  line-height: 1.2;
 }
 
 h3 {
-  font-size: 16px;
-  color: #000000;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+p, li {
+  font-size: 1rem;
+  color: #515154;
+  line-height: 1.6;
+  margin: 0 0 1em 0;
+}
+
+ul {
+  padding-left: 1.2em;
+}
+
+.input-container,
+.hourly-tabs {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.06);
+  padding: 2.5rem 2rem;
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 480px;
+  border: none;
+}
+
+.tab-buttons {
+  display: flex;
+  border-bottom: 1px solid #e0e0e5;
+  background: transparent;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+}
+
+.tab-buttons button {
+  background: none;
+  border: none;
+  color: #1d1d1f;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  margin-right: 0.5rem;
+  border-radius: 12px 12px 0 0;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.tab-buttons button.active {
+  background: #e5e5ea;
+  color: #0071e3;
+}
+
+.tab-content {
+  padding: 1.5rem 0;
   text-align: center;
 }
 
-.input-container {
-  margin: auto;
-  background: white;
-  padding: 2rem;
+button {
+  background: #0071e3;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  width: 450px;
+  padding: 0.75rem 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
 }
 
-li {
-  margin-bottom: 0.5rem;
+button:hover, .tab-buttons button:hover {
+  background: #005bb5;
+  color: #fff;
+  transform: translateY(-2px);
 }
 
-p {
-  font-size: 16px;
-  color: #000000;
-  text-align: left;
+button:active {
+  background: #0071e3;
+  transform: none;
+}
+
+.temp-large {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin: 0.5rem 0;
+}
+
+.feels-like, .uv-index {
+  font-size: 1rem;
+  color: #86868b;
+  margin: 0.2rem 0;
 }
 
 .fade-in {
   opacity: 0;
   animation: fadeIn ease-in 0.8s forwards;
 }
-
-button {
-  display: inline-block;
-  padding: 1rem 1rem;
-  background-color: #ffffff; /* Bright yellow for contrast */
-  color: #000; /* Black text for readability */
-  font-weight: bold;
-  font-size: 16px;
-  border: none;
-  border-radius: 12px; /* Matches the rounded corners of your input container */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-button:hover {
-  background-color: #ff9900; /* Darker shade on hover */
-  transform: translateY(-2px); /* Slight lift effect */
-}
-
-button:active {
-  transform: translateY(0); /* Reset lift effect on click */
-}
-
 
 @keyframes fadeIn {
   0% {
@@ -80,89 +140,4 @@ button:active {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.hourly-tabs {
-  display: flex;
-  flex-direction: column;
-  width: 450px;
-  margin: auto;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  position: relative;
-}
-
-.tab-buttons {
-  display: flex;
-  overflow-x: auto;
-  border-bottom: 1px solid #ccc;
-  margin: auto;
-  width: 100%; /* Change this to 100% */
-  scrollbar-width: auto;     
-  scrollbar-color: #888 #f0f0f0;
-}
-
-
-
-.tab-buttons::-webkit-scrollbar {
-  height: 12px;
-  max-width: 450px; 
-}
-
-.tab-buttons::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 6px;
-}
-
-.tab-buttons::-webkit-scrollbar-track {
-  background: #f0f0f0;
-}
-
-.tab-buttons button {
-  flex: 0 0 auto;
-  padding: 0.5rem 1rem;
-  border: none;
-  background: #f0f0f0;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.25s;
-  margin-right: 0.25rem;
-  white-space: nowrap;
-}
-
-.tab-buttons button.active {
-  background: #ff9900;
-  color: white;
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  border-bottom: 1px solid #ccc;
-  scrollbar-width: auto;
-  scrollbar-color: #888 #f0f0f0;
-}
-
-.tab-content {
-  padding: 1rem 2rem;
-  text-align: center;
-}
-
-.temp-large {
-  font-size: 3rem;
-  font-weight: bold;
-  margin: 0.2rem 0;
-}
-
-.feels-like {
-  font-size: 1rem;
-  color: #666;
-  margin: 0.2rem 0;
-}
-
-.uv-index {
-  font-size: 1rem;
-  color: #333;
-  margin: 0.2rem 0;
 }
