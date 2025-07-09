@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Huaxia Hub</title>
+</head>
+
+<style>
+    h4 {
+        text-align: center;
+        font-size: xx-small;
+        font-style: bold;
+    }
+
+    .animation {
+        animation: moveDown 1s , fadeIn 1s , sizeIncrease 1s , fadeOut 1s, hide 0s ;
+    }
+
+    .animation2 {
+        animation: fadeIn 1s, fadeOut 1s, hide 0s;
+    }
+
+    @keyframes moveDown {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(500px);
+        }
+    }
+
+    @keyframes sizeIncrease {
+        from { transform: scale(1); }
+        to { transform: scale(75); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+
+    @keyframes hide {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+</style>
+
+<body>
+    
+    <video autoplay muted id="background-video" role="image" class="animation" style="width:100vw; height:auto; display:block; position:fixed; top:0; left:0; z-index:9999;">
+        <source src="animations(mp4)/animation_Setup1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <script>
+        const video = document.getElementById('background-video');
+        video.addEventListener('ended', function() {
+            video.parentNode.removeChild(video);
+
+            const formContainer = document.createElement('div');
+            formContainer.style.display = 'flex';
+            formContainer.style.flexDirection = 'column';
+            formContainer.style.alignItems = 'center';
+            formContainer.style.justifyContent = 'center';
+            formContainer.style.height = '100vh';
+
+            const title = document.createElement('h1');
+            title.textContent = "Let's know you";
+            formContainer.appendChild(title);
+
+            const usernameInput = document.createElement('input');
+            usernameInput.type = 'text';
+            usernameInput.placeholder = 'Username';
+            usernameInput.style.margin = '8px';
+            formContainer.appendChild(usernameInput);
+
+            const firstNameInput = document.createElement('input');
+            firstNameInput.type = 'text';
+            firstNameInput.placeholder = 'First name';
+            firstNameInput.style.margin = '8px';
+            formContainer.appendChild(firstNameInput);
+
+            const lastNameInput = document.createElement('input');
+            lastNameInput.type = 'text';
+            lastNameInput.placeholder = 'Last name';
+            lastNameInput.style.margin = '8px';
+            formContainer.appendChild(lastNameInput);
+
+            const submitButton = document.createElement('button');
+            submitButton.textContent = 'Submit';
+            submitButton.style.margin = '8px';
+            formContainer.appendChild(submitButton);
+            submitButton.addEventListener('click', function() {
+                const username = usernameInput.value;
+                const firstName = firstNameInput.value;
+                const lastName = lastNameInput.value;
+
+                if (username && firstName && lastName) {
+                    localStorage.setItem('huaxia_username', username);
+                    localStorage.setItem('huaxia_firstname', firstName);
+                    localStorage.setItem('huaxia_lastname', lastName);
+                    localStorage.setItem('huaxia_setup_complete', 'true');
+                    window.location.href = 'programs.html';
+                } else {
+                    alert('Please fill in all fields.');
+                }
+            });
+            document.body.appendChild(formContainer);
+        });
+    </script>
+</body>
+</html>
