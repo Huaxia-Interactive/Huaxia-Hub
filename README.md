@@ -1,6 +1,6 @@
 # NOTICE
 
-v1.0 branch is broken; we will fix it soon. Downloading is currently not available.
+The v1.0 branch is now the main branch. When a new version is released, it will be renamed accordingly, and the previous version will be duplicated to a lower branch. Downloading is currently not available.
 
 # Huaxia Hub
 
