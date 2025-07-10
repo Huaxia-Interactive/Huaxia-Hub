@@ -1,6 +1,6 @@
 # NOTICE
 
-Download from the v1.0 branch, not the main. The main branch is designed for sorting files only; files are not configured properly. We put files there to be pushed to the other branches.
+v1.0 branch is broken; we will fix it soon. Downloading is currently not available.
 
 # Huaxia Hub
 
