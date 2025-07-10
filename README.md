@@ -42,4 +42,5 @@ Under MIT License
 # DISCLAIMER
 
 *=Subject to project roadmap; may not be inplemented
+
 **=AI features subject to API's and project roadmap; AI features may not work in your region or may not be implemented.
