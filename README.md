@@ -14,7 +14,7 @@ Fun content: Free-to-play, Ad-free games integrated into Huaxia Hub.*
 Get connected: Communicate with others using state-of-the-art RSS
 protocol services for fast, secure and reliable communication.*
 
-To the future: With powerful AI tools and assistants, increasing productivity, adding convenience and completing work for you.**
+To the future with Nexus: Say hello to Nexus Smart Assistant, powered by AI. Nexus can increase productivity, add convenience and complete work for you.**
 
 Smarter Lifestyle: Making life easier with smart plugins like Huaxia Weather.
 
