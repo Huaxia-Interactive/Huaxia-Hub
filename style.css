@@ -53,7 +53,7 @@ ul {
   box-shadow: 0 4px 24px 0 rgba(0,0,0,0.06);
   padding: 2.5rem 2rem;
   margin: 2rem auto;
-  width: 100%;
+  width: 85%;
   max-width: 480px;
   border: none;
 }
@@ -111,6 +111,20 @@ button:hover, .tab-buttons button:hover {
 button:active {
   background: #0071e3;
   transform: none;
+}
+
+.tab-buttons::-webkit-scrollbar {
+  height: 12px;
+  max-width: 450px; /* Ensures no stretching beyond parent */
+}
+
+.tab-buttons::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+
+.tab-buttons::-webkit-scrollbar-track {
+  background: #f0f0f0;
 }
 
 .temp-large {
