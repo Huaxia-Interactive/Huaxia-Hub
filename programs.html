@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Huaxia Hub</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="huaxia_hub_logo.jpg" type="image/x-icon" style="border-radius: 12px;"/>
+  <style>
+    :root {
+      --gap: 15px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    .widget-container {
+      text-align: center;
+      margin-bottom: 2rem;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      width: 25vw;
+    }
+
+    .home-screen {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);  
+      gap: var(--gap);
+      width: 90vw;
+      max-width: 400px;
+      aspect-ratio: 3 / 2; 
+    }
+
+    .app-button {
+      background: #0077ff;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .app-button:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="widget-container">
+    <div class="widget_welcome">
+      <h2 id="time-display">--:--</h2>
+      <p id="greeting">Loading...</p>
+      <p id="weather-data">Loading...</div></p>
+    </div>
+  </div>
+
+  <div class="home-screen">
+    <button class="app-button" onclick="window.location.href='apps/workspace/workspaceprograms.html'">Huaxia Work</button>
+    <button class="app-button">Huaxia Games</button>
+    <button class="app-button">Huaxia Connect</button>
+    <button class="app-button">Huaxia Web</button>
+    <button class="app-button" onclick="window.location.href='apps/weather/index_weather.html'">Huaxia Weather</button>
+    <button class="app-button">Settings</button>
+  </div>
+
+  <script id="messenger-widget-b" src="https://cdn.botpenguin.com/website-bot.js" defer>68720c384c039f61b3f55ea6,68720be9d799996360778177</script>
+  
+  <script>
+  function updateClock() {
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+
+    const formattedTime = `${hours}:${minutes} ${ampm}`;
+    document.getElementById('time-display').textContent = formattedTime;
+
+    const name = localStorage.getItem('huaxia_firstname') || 'User';
+    let greeting;
+    if (now.getHours() < 10) {
+      greeting = 'Good Morning';
+    } else if (now.getHours() < 13) {
+      greeting = 'Good Day';
+    } else if (now.getHours() < 16) {
+      greeting = 'Good Afternoon';
+    } else {
+      greeting = 'Good Evening';
+    }
+
+    const welcomeMsg = document.getElementById('greeting');
+    if (welcomeMsg) {
+      welcomeMsg.textContent = `${greeting}, ${name}.`;
+    }
+  }
+
+    function displayWeather() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+              .then(res => res.json())
+              .then(locationData => {
+                const city = locationData.address.city || locationData.address.town || locationData.address.village || "your area";
+
+                fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode&timezone=auto`)
+                  .then(res => res.json())
+                  .then(weather => {
+                    const code = weather.current.weathercode;
+                    const temp = weather.current.temperature_2m;
+                    const weatherMap = {
+                      0: "Clear", 1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
+                      45: "Fog", 48: "Rime Fog", 51: "Light drizzle", 61: "Rain",
+                      71: "Snow", 80: "Rain showers", 95: "Thunderstorm"
+                    };
+                    const desc = weatherMap[code] || "Unknown";
+                    const weatherPara = document.getElementById('weather-data');
+                    weatherPara.textContent = `${desc}, ${temp}°C in ${city}.`;
+                  });
+              });
+          },
+          () => {
+            document.getElementById('weather-data').textContent = "Location permission denied.";
+          }
+        );
+      } else {
+        document.getElementById('weather-data').textContent = "Geolocation not supported.";
+      }
+    }
+
+  updateClock();
+  displayWeather();
+  setInterval(updateClock, 60000);
+  </script>
+</body>
+</html>

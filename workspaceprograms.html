@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Screen</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="huaxia_hub_logo.jpg" type="image/x-icon" style="border-radius: 12px;"/>
+  <style>
+    :root {
+      --gap: 15px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    .home-screen {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);  
+      gap: var(--gap);
+      width: 90vw;
+      max-width: 400px;
+      aspect-ratio: 3 / 2; 
+    }
+
+    .app-button {
+      background: #0077ff;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .app-button:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+<div class="home-screen">
+    <button class="app-button">Huaxia Writer</button>
+    <button class="app-button">Huaxia Calculate Pro</button>
+    <button class="app-button">Huaxia Presenter</button>
+    <button class="app-button">Huaxia Editor</button>
+    <button class="app-button">Huaxia Notebook</button>
+    <button class="app-button">Huaxia Nexus</button>
+  </div>
+
+  <script id="messenger-widget-b" src="https://cdn.botpenguin.com/website-bot.js" defer>68720c384c039f61b3f55ea6,68720be9d799996360778177</script>
+  
+</body>
+</html>
