@@ -18,7 +18,7 @@ To the future with Nexus: Say hello to Nexus Smart Assistant, powered by AI. Nex
 
 Smarter Lifestyle: Making life easier with smart plugins like Huaxia Weather.
 
-User-Friendly Interface: Intuitive design for easy navigation and use.
+User-Friendly Interface: Intuitive design for easy navigation and use. With 3D elements that are more responsive than ever, Huaxia Hub's UI is simply a treat for your eyes.
 
 High Quality UX: Providing a better User Experience through quality and privacy.
 
