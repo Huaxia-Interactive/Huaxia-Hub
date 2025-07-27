@@ -29,7 +29,7 @@ Frontend: HTML, CSS, JavaScript
 
 Backend: Node.js, TypeScript, Java
 
-Packaging system: Python (Eel)
+Packaging system: Python (Eel) UNCONFIRMED
 
 API: Custom OpenMeteo API,BotPenguin
 
