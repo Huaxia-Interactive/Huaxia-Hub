@@ -31,7 +31,7 @@ Backend: Node.js, TypeScript, Java
 
 Packaging system: Python (Eel)
 
-API: Custom OpenMeteo API
+API: Custom OpenMeteo API,BotPenguin
 
 # Installation
 
