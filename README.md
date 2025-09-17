@@ -1,6 +1,6 @@
 # NOTICE
 
-We will NOT be updating the HTML, CSS, Javascript or Typescript files. Instead when Huaxia Hub is fully released you will find a singular executable / DMG* file.
+We will NOT be updating the HTML, CSS, Javascript or Typescript files. Instead when Huaxia Hub is fully released you will find a singular executable / DMG* file. You will only fund HTML, CSS, JavaScript or Typescript only during the development process, in which we may remove certain files.
 
 The v1.0 branch is now the main branch. When a new version is released, it will be renamed accordingly, and the previous version will be duplicated to a lower branch. Downloading is currently not available.
 
