@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="huaxia_hub_logo.jpg" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet" />
+    <title>Huaxia Hub - Setup</title>
+
+    <style>
+        h4 {
+            text-align: center;
+            font-size: xx-small;
+            font-style: bold;
+        }
+
+        .animation {
+            animation: fadeIn 1s ease-out;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted id="background-video" style="position: fixed; width: 100vw; height: auto; z-index: -1;">
+        <source src="animations(mp4)/animation_Setup1.mp4" type="video/mp4">
+    </video>
+
+    <video id="ending-video" style="display: none; width: 100vw; height: auto; position: fixed; top: 0; left: 0; z-index: 9999;">
+        <source src="animations(mp4)/setup_finished.mp4" type="video/mp4">
+    </video>
+
+    <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const introVideo = document.getElementById('background-video');
+        const endingVideo = document.getElementById('ending-video');
+
+        const startSetupSequence = () => {
+            if (introVideo && introVideo.parentNode) {
+                introVideo.pause();
+                introVideo.removeAttribute('src');
+                introVideo.load();
+                introVideo.parentNode.removeChild(introVideo);
+            }
+
+            const formContainer = document.createElement('div');
+            Object.assign(formContainer.style, {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100vh',
+            });
+
+            let currentStep = 1;
+
+            const firstNameInput  = Object.assign(document.createElement('input'), { type: 'text',  placeholder: 'First name'  });
+            const lastNameInput   = Object.assign(document.createElement('input'), { type: 'text',  placeholder: 'Surname'     });
+            const emailInput      = Object.assign(document.createElement('input'), { type: 'email', placeholder: 'Email'       });
+            const usernameInput   = Object.assign(document.createElement('input'), { type: 'text',  placeholder: 'Username'    });
+            [firstNameInput, lastNameInput, emailInput, usernameInput].forEach(el => el.style.margin = '8px');
+
+            const nextButton   = Object.assign(document.createElement('button'), { textContent: 'Next'          });
+            const finishButton = Object.assign(document.createElement('button'), { textContent: 'Finish Setup'  });
+            [nextButton, finishButton].forEach(el => el.style.margin = '8px');
+
+            const renderStep = () => {
+                formContainer.innerHTML = '';
+                if (currentStep === 1) {
+                    formContainer.appendChild(Object.assign(document.createElement('h1'), { textContent: "What's your name?" }));
+                    formContainer.append(firstNameInput, lastNameInput, nextButton);
+                } else {
+                    const firstName = firstNameInput.value.trim();
+                    const personalizedTitle = document.createElement('h1');
+                    personalizedTitle.textContent = `Let's fill in the details, ${firstName}.`;
+                    formContainer.appendChild(personalizedTitle);
+                    formContainer.append(emailInput, usernameInput, finishButton);
+                }
+            };
+
+            nextButton.addEventListener('click', () => {
+                if (firstNameInput.value && lastNameInput.value) {
+                    currentStep = 2;
+                    renderStep();
+                } else {
+                    alert('Please fill in all fields.');
+                }
+            });
+
+            finishButton.addEventListener('click', () => {
+                if (emailInput.value && usernameInput.value) {
+                    localStorage.setItem('huaxia_firstname', firstNameInput.value);
+                    localStorage.setItem('huaxia_lastname',  lastNameInput.value);
+                    localStorage.setItem('huaxia_email',     emailInput.value);
+                    localStorage.setItem('huaxia_username',  usernameInput.value);
+                    localStorage.setItem('huaxia_setup_complete', 'true');
+
+                    formContainer.remove();
+
+                    endingVideo.style.display = 'block';
+                    endingVideo.muted = false;
+
+                    const newEndingVideo = endingVideo.cloneNode(true);
+                    endingVideo.replaceWith(newEndingVideo);
+                    newEndingVideo.style.display = 'block';
+                    newEndingVideo.muted = false;
+                    newEndingVideo.play().catch(() => {
+
+                    endingVideo.muted = true;
+                    endingVideo.play().then(() => endingVideo.muted = false);
+                    });
+
+                    newEndingVideo.addEventListener('ended', () => {
+                     window.location.href = 'programs.html';
+});
+                } else {
+                    alert('Please fill in all fields.');
+                }
+            });
+
+            renderStep();
+            document.body.appendChild(formContainer);
+        };
+
+        if (introVideo) {
+            introVideo.addEventListener('ended', startSetupSequence);
+            setTimeout(() => document.body.contains(introVideo) && startSetupSequence(), 16000); 
+        }
+    });
+    </script>
+</body>
+</html>

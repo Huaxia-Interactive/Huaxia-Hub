@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Huaxia Web</title>
+  <link href="https://unpkg.com/lucide-static/font/lucide.css" rel="stylesheet">
+  <link rel="stylesheet" href="webstyle.css">
+</head>
+<body>
+  <div class="topbar">
+    <button class="nav-btn" onclick="goBack()"><i class="lucide-arrow-left"></i></button>
+    <button class="nav-btn" onclick="goForward()"><i class="lucide-arrow-right"></i></button>
+    <button class="nav-btn" onclick="reload()"><i class="lucide-rotate-cw"></i></button>
+    <input id="url" class="urlbar" type="text" placeholder="Search or enter address">
+    <button class="nav-btn"><i class="lucide-plus"></i></button>
+  </div>
+
+  <div class="tabs">
+    <div class="tab-island">
+      <div class="tab active" onclick="switchTab('https://example.com', this)">Example</div>
+      <div class="tab" onclick="switchTab('https://wikipedia.org', this)">Wiki</div>
+    </div>
+  </div>
+
+  <iframe id="browser" src="https://example.com"></iframe>
+
+  <script src="webscript.js"></script>
+</body>
+</html>

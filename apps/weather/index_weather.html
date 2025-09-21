@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Huaxia Weather</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="fixedfavicon.ico" type="image/x-icon" />
+  <style>
+    .button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: #ffcc00; /* Bright yellow for contrast */
+  color: #000;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px; /* Matches the rounded corners of your input container */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.button:hover {
+  background-color: #ff9900; /* Darker shade on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+.button:active {
+  transform: translateY(0); /* Reset lift effect on click */
+}
+
+    </style>
+</head>
+<body>
+  <h1 class="fade-in">Weather App</h1>
+
+  <div class="input-container fade-in">
+    <button onclick="window.location.href='/programs.html'" >Back</button>
+    <button onclick="window.location.href='index_weather.html'">Home</button>
+    <button onclick="window.location.href='about.html'">About</button>
+  </div>
+
+  <br />
+
+  <div class="input-container fade-in">
+    <form id="weather-form">
+      <label for="city">Enter City:</label>
+      <input type="text" id="city" name="city" required />
+      <button type="submit">Get Weather</button>
+    </form>
+    <p id="weather-result"></p>
+  </div>
+
+  <br />
+
+  <div class="input-container fade-in">
+    <h2>Hourly Temperature and UV Report</h2>
+    <div id="hourly-tabs" class="hourly-tabs fade-in"></div>
+  </div>
+
+  <script>
+    async function getCoordinates(city) {
+      const res = await fetch(
+        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+          city
+        )}&count=1`
+      );
+      const data = await res.json();
+      if (data.results && data.results.length > 0) {
+        return {
+          name: data.results[0].name,
+          country: data.results[0].country,
+          latitude: data.results[0].latitude,
+          longitude: data.results[0].longitude,
+        };
+      } else {
+        throw new Error("City not found");
+      }
+    }
+
+    // Weather code mapping
+    const weatherCodes = {
+      0: { description: "Clear sky", icon: "☀️" },
+      1: { description: "Mainly clear", icon: "🌤️" },
+      2: { description: "Partly cloudy", icon: "⛅" },
+      3: { description: "Overcast", icon: "☁️" },
+      45: { description: "Foggy", icon: "🌫️" },
+      48: { description: "Depositing rime fog", icon: "🌫️" },
+      51: { description: "Light drizzle", icon: "🌧️" },
+      53: { description: "Moderate drizzle", icon: "🌧️" },
+      55: { description: "Dense drizzle", icon: "🌧️" },
+      61: { description: "Slight rain", icon: "🌧️" },
+      63: { description: "Moderate rain", icon: "🌧️" },
+      65: { description: "Heavy rain", icon: "🌧️" },
+      71: { description: "Slight snow fall", icon: "❄️" },
+      73: { description: "Moderate snow fall", icon: "❄️" },
+      75: { description: "Heavy snow fall", icon: "❄️" },
+      77: { description: "Snow grains", icon: "❄️" },
+      80: { description: "Slight rain showers", icon: "🌦️" },
+      81: { description: "Moderate rain showers", icon: "🌦️" },
+      82: { description: "Violent rain showers", icon: "🌊" },
+      85: { description: "Slight snow showers", icon: "🌨️" },
+      86: { description: "Heavy snow showers", icon: "🌨️" },
+      95: { description: "Thunderstorm", icon: "⛈️" },
+      96: { description: "Thunderstorm with light hail", icon: "🌩️" },
+      99: { description: "Thunderstorm with heavy hail", icon: "🌩️" }
+    };
+
+    async function getHourlyWeather(lat, lon, cityName) {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,apparent_temperature,uv_index,weathercode&timezone=auto`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      const times = data.hourly.time;
+      const temps = data.hourly.temperature_2m;
+      const apparentTemps = data.hourly.apparent_temperature;
+      const uvIndex = data.hourly.uv_index;
+      const weatherCodeArr = data.hourly.weathercode;
+
+      const tabsContainer = document.getElementById("hourly-tabs");
+      tabsContainer.innerHTML = "";
+
+      const buttonsDiv = document.createElement("div");
+      buttonsDiv.className = "tab-buttons";
+
+      const contentDiv = document.createElement("div");
+      contentDiv.className = "tab-content fade-in";
+
+      tabsContainer.appendChild(buttonsDiv);
+      tabsContainer.appendChild(contentDiv);
+
+      function formatHour(timeString) {
+        const d = new Date(timeString);
+        return d.toLocaleTimeString(undefined, { hour: "numeric", hour12: true });
+      }
+
+      const maxTabs = 24;
+
+      for (let i = 0; i < Math.min(times.length, maxTabs); i++) {
+        const btn = document.createElement("button");
+        btn.textContent = formatHour(times[i]);
+        buttonsDiv.appendChild(btn);
+
+        btn.addEventListener("click", () => {
+          [...buttonsDiv.children].forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          // Get weather condition
+          const code = weatherCodeArr[i];
+          const weatherInfo = weatherCodes[code] || { description: "Unknown", icon: "❓" };
+
+          // Re-trigger fade-in animation on tab content
+          contentDiv.classList.remove("fade-in");
+          void contentDiv.offsetWidth;
+          contentDiv.classList.add("fade-in");
+
+          contentDiv.innerHTML = `
+            <div class="temp-large">${temps[i].toFixed(1)}°C</div>
+            <div class="feels-like">Feels Like: ${apparentTemps[i].toFixed(1)}°C</div>
+            <div class="uv-index">UV Index: ${uvIndex[i]}</div>
+            <div class="weather-desc">${weatherInfo.icon} ${weatherInfo.description}</div>
+          `;
+        });
+      }
+
+      if (buttonsDiv.firstChild) {
+        buttonsDiv.firstChild.click();
+      }
+    }
+
+    document
+      .getElementById("weather-form")
+      .addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const city = document.getElementById("city").value;
+
+        const resultEl = document.getElementById("weather-result");
+        resultEl.textContent = "Loading...";
+        resultEl.classList.remove("fade-in");
+        void resultEl.offsetWidth;
+        resultEl.classList.add("fade-in");
+
+        document.getElementById("hourly-tabs").innerHTML = "";
+
+        try {
+          const location = await getCoordinates(city);
+          resultEl.textContent = `Coordinates for ${location.name}, ${location.country}: ${location.latitude.toFixed(
+            2
+          )}, ${location.longitude.toFixed(2)}`;
+          resultEl.classList.remove("fade-in");
+          void resultEl.offsetWidth;
+          resultEl.classList.add("fade-in");
+
+          await getHourlyWeather(location.latitude, location.longitude, location.name);
+        } catch (error) {
+          resultEl.textContent = error.message || "Error fetching weather data";
+          resultEl.classList.remove("fade-in");
+          void resultEl.offsetWidth;
+          resultEl.classList.add("fade-in");
+        }
+      });
+  </script>
+</body>
+</html>
+

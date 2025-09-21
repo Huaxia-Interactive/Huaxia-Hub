@@ -1,0 +1,48 @@
+:root {
+    --gap: 15px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+.widget-container {
+    text-align: center;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    width: 25vw;
+}
+
+.home-screen {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);  
+    gap: var(--gap);
+    width: 90vw;
+    max-width: 400px;
+    aspect-ratio: 3 / 2; 
+}
+
+.app-button {
+    background: #0077ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.app-button:hover {
+    transform: scale(1.05);
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Huaxia Writer</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #editor-container {
+        position: relative;
+        width: 80%;
+        max-width: 800px;
+        margin: 50px auto;
+        border: 1px solid #ccc;
+        padding: 1rem;
+        font-family: "Roboto", sans-serif;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        background: white;
+        height: 500px;
+        overflow-y: auto;
+    }
+
+    #editor {
+        outline: none;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        min-height: 100%;
+        caret-color: transparent;
+    }
+
+    #custom-cursor {
+        position: absolute;
+        width: 2px;
+        height: 1.2em;
+        background-color: black;
+        pointer-events: none;
+        transition: transform 0.1s ease-out;
+        animation: blink 1s step-start infinite;
+    }
+
+    @keyframes blink {
+    50% {
+        opacity: 0;
+    }
+    }
+  </style>
+</head>
+<body>
+  <div id="editor-container">
+    <div id="editor" contenteditable="true" spellcheck="false"></div>
+    <div id="custom-cursor"></div>
+  </div>
+
+  <script src="/apps/workspace/workapps/writer/cursor.js"></script>
+</body>
+</html>
