@@ -4,26 +4,97 @@
   <meta charset="UTF-8">
   <title>Huaxia Web</title>
   <link href="https://unpkg.com/lucide-static/font/lucide.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="webstyle.css">
+  <link rel="icon" href="huaxia_hub_logo.jpg" type="image/x-icon" style="border-radius: 12px;"/>
 </head>
 <body>
   <div class="topbar">
     <button class="nav-btn" onclick="goBack()"><i class="lucide-arrow-left"></i></button>
     <button class="nav-btn" onclick="goForward()"><i class="lucide-arrow-right"></i></button>
     <button class="nav-btn" onclick="reload()"><i class="lucide-rotate-cw"></i></button>
-    <input id="url" class="urlbar" type="text" placeholder="Search or enter address">
-    <button class="nav-btn"><i class="lucide-plus"></i></button>
+    <input id="url" class="urlbar" type="text" placeholder="Enter URL or search">
+    <button class="nav-btn"><i class="lucide-circle"></i></button>
   </div>
 
-  <div class="tabs">
-    <div class="tab-island">
-      <div class="tab active" onclick="switchTab('https://example.com', this)">Example</div>
-      <div class="tab" onclick="switchTab('https://wikipedia.org', this)">Wiki</div>
-    </div>
+  <div class="tabs" id="tabs">
+    <button id="newTabBtn" class="nav-btn"><i class="lucide-plus"></i></button>
   </div>
 
-  <iframe id="browser" src="https://example.com"></iframe>
+  <iframe id="browser" src="about:blank"></iframe>
 
-  <script src="webscript.js"></script>
+  <script>
+    const iframe = document.getElementById("browser")
+    const urlBar = document.getElementById("url")
+    const tabsContainer = document.getElementById("tabs")
+    const newTabBtn = document.getElementById("newTabBtn")
+    let currentTab = null
+
+    function createTab(url = "about:blank") {
+      const island = document.createElement("div")
+      island.className = "tab-island"
+
+      const tab = document.createElement("div")
+      tab.className = "tab active"
+      tab.textContent = url === "about:blank" ? "New Tab" : url
+
+      const closeBtn = document.createElement("button")
+      closeBtn.className = "close-btn"
+      closeBtn.innerHTML = "✕"
+      closeBtn.onclick = (e) => {
+        e.stopPropagation()
+        closeTab(island, tab)
+      }
+
+      tab.onclick = () => switchTab(url, tab)
+
+      island.appendChild(tab)
+      island.appendChild(closeBtn)
+      tabsContainer.insertBefore(island, newTabBtn)
+      switchTab(url, tab)
+    }
+
+    function switchTab(url, el) {
+      iframe.src = url
+      urlBar.value = url
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"))
+      el.classList.add("active")
+      currentTab = el
+    }
+
+    function closeTab(island, tab) {
+      const isActive = tab.classList.contains("active")
+      island.remove()
+      if (isActive) {
+        const nextTab = tabsContainer.querySelector(".tab")
+        if (nextTab) {
+          nextTab.click()
+        } else {
+          iframe.src = "about:blank"
+          urlBar.value = ""
+          currentTab = null
+        }
+      }
+    }
+
+    urlBar.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        let url = urlBar.value.trim()
+        if (!url.startsWith("http")) {
+          url = "https://duckduckgo.com/?q=" + encodeURIComponent(url)
+        }
+        iframe.src = url
+        createTab(url)
+      }
+    })
+
+    newTabBtn.addEventListener("click", () => createTab())
+
+    function goBack() { try { iframe.contentWindow.history.back() } catch(e){} }
+    function goForward() { try { iframe.contentWindow.history.forward() } catch(e){} }
+    function reload() { iframe.contentWindow.location.reload() }
+
+    createTab()
+  </script>
 </body>
 </html>
