@@ -113,6 +113,10 @@ button:active {
   transform: none;
 }
 
+.nav-btn {
+  font-family: 'Inter', Arial, sans-serif;
+}
+
 .tab-buttons::-webkit-scrollbar {
   height: 12px;
   max-width: 450px; /* Ensures no stretching beyond parent */
