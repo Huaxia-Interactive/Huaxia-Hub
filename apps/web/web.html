@@ -14,7 +14,7 @@
     <button class="nav-btn" onclick="goForward()">&#x2192;</button>
     <button class="nav-btn" onclick="reload()">↻</button>
     <input id="url" class="urlbar" type="text" placeholder="Enter URL or search">
-    <button class="nav-btn" onclick="window.location.href='../programs.html'">Back</button>
+    <button class="nav-btn" onclick="window.location.href='../../programs.html'">Back</button>
   </div>
 
   <div class="tabs" id="tabs">
@@ -29,6 +29,31 @@
     const tabsContainer = document.getElementById("tabs")
     const newTabBtn = document.getElementById("newTabBtn")
     let currentTab = null
+
+    // Navigation history tracking for tabs
+    let tabHistory = [];
+    let tabHistoryIndex = -1;
+
+    function setIframeSrc(url) {
+      iframe.src = url;
+      urlBar.value = url;
+    }
+
+    function goBack() {
+      if (tabHistoryIndex > 0) {
+        tabHistoryIndex--;
+        setIframeSrc(tabHistory[tabHistoryIndex]);
+      }
+    }
+    function goForward() {
+      if (tabHistoryIndex < tabHistory.length - 1) {
+        tabHistoryIndex++;
+        setIframeSrc(tabHistory[tabHistoryIndex]);
+      }
+    }
+    function reload() {
+      setIframeSrc(tabHistory[tabHistoryIndex] || "about:blank");
+    }
 
     function createTab(url = "about:blank") {
       const island = document.createElement("div")
@@ -52,11 +77,13 @@
       island.appendChild(closeBtn)
       tabsContainer.insertBefore(island, newTabBtn)
       switchTab(url, tab)
+      // Reset history for new tab
+      tabHistory = [url];
+      tabHistoryIndex = 0;
     }
 
     function switchTab(url, el) {
-      iframe.src = url
-      urlBar.value = url
+      setIframeSrc(url);
       document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"))
       el.classList.add("active")
       currentTab = el
@@ -83,16 +110,18 @@
         if (!url.startsWith("http")) {
           url = "https://duckduckgo.com/?q=" + encodeURIComponent(url)
         }
-        iframe.src = url
+        setIframeSrc(url);
+        // Only push if new or changed
+        if (tabHistory[tabHistoryIndex] !== url) {
+          tabHistory = tabHistory.slice(0, tabHistoryIndex + 1);
+          tabHistory.push(url);
+          tabHistoryIndex = tabHistory.length - 1;
+        }
         createTab(url)
       }
     })
 
     newTabBtn.addEventListener("click", () => createTab())
-
-    function goBack() { try { iframe.contentWindow.history.back() } catch(e){} }
-    function goForward() { try { iframe.contentWindow.history.forward() } catch(e){} }
-    function reload() { iframe.contentWindow.location.reload() }
 
     createTab()
   </script>
