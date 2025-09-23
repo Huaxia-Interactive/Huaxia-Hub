@@ -1,6 +1,6 @@
 body {
   background-color: #ffffff;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 h1 {
@@ -8,18 +8,21 @@ h1 {
   text-align: center;
   font-weight: bold;
   font-size: xx-large;
+  font-family: 'Inter', sans-serif;
 }
 
 h2 {
   color: rgb(0, 0, 0);
   text-align: left;
   font-size: large;
+  font-family: 'Inter', sans-serif;
 }
 
 h3 {
   font-size: 16px;
   color: #000000;
   text-align: center;
+  font-family: 'Inter', sans-serif;
 }
 
 .input-container {
@@ -39,6 +42,7 @@ p {
   font-size: 16px;
   color: #000000;
   text-align: left;
+  font-family: 'Inter', sans-serif;
 }
 
 .fade-in {
@@ -49,8 +53,8 @@ p {
 button {
   display: inline-block;
   padding: 1rem 1rem;
-  background-color: #0800fd; /* Bright yellow for contrast */
-  color: #ffffff; /* Black text for readability */
+  background-color: #0277FF /* Bright yellow for contrast */
+  color(srgb 0 0 0); /* Black text for readability */
   font-weight: bold;
   font-size: 16px;
   border: none;
@@ -59,10 +63,11 @@ button {
   cursor: pointer;
   text-align: center;
   transition: background-color 0.3s, transform 0.2s;
+  font-family: 'Inter', sans-serif;
 }
 
 button:hover {
-  background-color: #005bb5; /* Darker shade on hover */
+  background-color: #005BB5; /* Darker shade on hover */
   transform: translateY(-2px); /* Slight lift effect */
 }
 
@@ -133,7 +138,7 @@ button:active {
 }
 
 .tab-buttons button.active {
-  background: #ff9900;
+  background: #0277FF;s
   color: white;
   display: flex;
   overflow-x: auto;
