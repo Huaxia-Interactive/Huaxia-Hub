@@ -4,6 +4,8 @@ We will NOT be updating the HTML, CSS, Javascript or Typescript files. Instead w
 
 The v1.0 branch is now the main branch. When a new version is released, it will be renamed accordingly, and the previous version will be duplicated to a lower branch. Downloading is currently not available.
 
+Please change the branch to v1.3-release, it is the latest version of the software.
+
 # Huaxia Hub
 
 A general-use application for everyday tasks.
